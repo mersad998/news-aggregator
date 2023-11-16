@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 
-import { APP_NAME, HEADER_HEIGHT, OPEN_DRAWER_WIDTH, CLOSE_DRAWER_WIDTH } from '../../core/constants';
+import { APP_NAME, OPEN_DRAWER_WIDTH, CLOSE_DRAWER_WIDTH } from '../../core/constants';
 import { useStyles } from './AppLayoutStyles';
 import { Drawer } from '../drawer';
 import { Header } from '../header';
@@ -15,7 +15,7 @@ const AppLayoutView: FC<AppLayoutViewProps> = forwardRef((props, forwardedRef) =
 
   return (
     <div className={classes.container}>
-      <Header title={APP_NAME} height={HEADER_HEIGHT} onHamburgerButtonClick={onHamburgerButtonClick} />
+      <Header title={APP_NAME} onHamburgerButtonClick={onHamburgerButtonClick} />
 
       <div className={classes.headerAndContentContainer}>
         <Drawer
