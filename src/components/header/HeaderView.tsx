@@ -5,7 +5,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { useTheme } from '@mui/material/styles';
 import { IconButton, Typography } from '@mui/material';
 
-import { ColorModeContext } from '../../App';
+import ColorModeContext from '../../core/contexs/colorMode';
 import { useStyles } from './HeaderStyles';
 
 import type { HeaderViewProps } from './HeaderTypes';

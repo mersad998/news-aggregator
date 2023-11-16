@@ -21,5 +21,6 @@ export const useStyles = makeStyles<Theme>(() => ({
     flex: 1,
     flexDirection: 'column',
     overflow: 'hidden',
+    padding: 8,
   },
 }));
