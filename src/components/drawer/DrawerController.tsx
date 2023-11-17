@@ -1,6 +1,5 @@
 import { useState, forwardRef, useImperativeHandle } from 'react';
 import HomeIcon from '@mui/icons-material/Home';
-import PersonIcon from '@mui/icons-material/Person';
 import { useTranslation } from 'react-i18next';
 
 import DrawerView from './DrawerView';
