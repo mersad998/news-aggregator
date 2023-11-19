@@ -4,7 +4,7 @@ import { ThemeProvider } from '@mui/system';
 import { Provider } from 'react-redux';
 
 import { customRoutes } from './core/routes';
-import { store as reduxStore } from './core/store';
+import { store as reduxStore } from './core/redux/store';
 import useColorMode from './core/hooks/useColorMode';
 import ColorModeContext from './core/contexs/colorMode';
 

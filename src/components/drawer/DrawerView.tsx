@@ -17,7 +17,10 @@ const DrawerView: FC<DrawerViewProps> = (props) => {
     const { title, icon, link } = item;
 
     return (
-      <MenuItem className={`${classes.menuItem} ${isLastItem ? classes.ignoreBorderBottom : ''}`}>
+      <MenuItem
+        key={Math.random()}
+        className={`${classes.menuItem} ${isLastItem ? classes.ignoreBorderBottom : ''}`}
+      >
         <a href={link} className={classes.textAndIcon}>
           {icon}
           {!minimalMode && <Typography>{title}</Typography>}

@@ -1,16 +1,19 @@
 import { type FC } from 'react';
-import { Typography } from '@mui/material';
 
 import { useStyles } from './DashboardStyles';
 
 import type { DashboardViewProps } from './DashboardTypes';
+import { FeedCard } from '../feedCard';
 
-const DashboardView: FC<DashboardViewProps> = () => {
+const DashboardView: FC<DashboardViewProps> = (props) => {
+  const { articles } = props;
   const classes = useStyles();
 
   return (
     <div className={classes.container}>
-      <Typography>This is Dashboard page (articles will be displayed here)</Typography>
+      {articles.map((article) => (
+        <FeedCard article={article} />
+      ))}
     </div>
   );
 };
