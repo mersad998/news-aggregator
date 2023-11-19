@@ -1,11 +1,11 @@
 import { type FC } from 'react';
 
-import { useStyles } from './DashboardStyles';
+import { useStyles } from './feedsPageStyles';
 
-import type { DashboardViewProps } from './DashboardTypes';
+import type { FeedsPageViewProps } from './feedsPageTypes';
 import { FeedCard } from '../feedCard';
 
-const DashboardView: FC<DashboardViewProps> = (props) => {
+const FeedsPageView: FC<FeedsPageViewProps> = (props) => {
   const { articles } = props;
   const classes = useStyles();
 
@@ -18,4 +18,4 @@ const DashboardView: FC<DashboardViewProps> = (props) => {
   );
 };
 
-export default DashboardView;
+export default FeedsPageView;

@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 
 import { AppLayout } from '../components/appLayout';
-import { DashboardPage } from '../components/dashboard';
+import { FeedsPage } from '../components/feedsPage';
 
 export const customRoutes = (
   <Routes>
@@ -9,7 +9,7 @@ export const customRoutes = (
       path="/"
       element={
         <AppLayout>
-          <DashboardPage />
+          <FeedsPage />
         </AppLayout>
       }
     />

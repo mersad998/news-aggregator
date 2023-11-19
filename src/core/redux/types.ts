@@ -2,7 +2,7 @@ import {
   NYTimesArticleInterface,
   NewsApiArticleInterface,
   TheGuardianArticleInterface,
-} from '../../components/dashboard/newsTypes';
+} from '../../components/feedsPage/newsTypes';
 import { NewsResources } from '../dataProvider/dataProviderTypes';
 
 export interface ResourceState<T> {

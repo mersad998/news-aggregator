@@ -6,7 +6,7 @@ import type {
   NewsApiArticleInterface,
   TheGuardianArticleInterface,
   NYTimesArticleInterface,
-} from '../../components/dashboard/newsTypes';
+} from '../../components/feedsPage/newsTypes';
 import { ResourcesState } from './types';
 import { NewsResources } from '../dataProvider/dataProviderTypes';
 

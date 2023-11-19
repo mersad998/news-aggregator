@@ -1,4 +1,4 @@
-import { DisplayableArticle } from '../dashboard/DashboardTypes';
+import { DisplayableArticle } from '../feedsPage/feedsPageTypes';
 
 export interface FeedCardControllerProps {
   article: DisplayableArticle;

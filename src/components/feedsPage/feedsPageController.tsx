@@ -1,10 +1,10 @@
 import { memo, useEffect, type FC } from 'react';
 
-import DashboardView from './DashboardView';
+import FeedsPageView from './feedsPageView';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import { mergeAndSortArticles } from './dashboardHelper';
+import { mergeAndSortArticles } from './feedsPageHelper';
 import LoadingBox from '../LoadingBox';
 import { selectResource } from '../../core/redux/resourcesSlice';
 import { fetchData } from '../../core/dataProvider';
@@ -15,9 +15,9 @@ import {
   TheGuardianParameters,
 } from '../../core/dataProvider/dataProviderTypes';
 
-import { ReduxState } from './DashboardTypes';
+import { ReduxState } from './feedsPageTypes';
 
-const DashboardController: FC = () => {
+const FeedsPageController: FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -66,7 +66,7 @@ const DashboardController: FC = () => {
     newYorkTimesData,
   });
 
-  return <DashboardView articles={mergedData} />;
+  return <FeedsPageView articles={mergedData} />;
 };
 
-export default memo(DashboardController, () => true);
+export default memo(FeedsPageController, () => true);

@@ -21,7 +21,7 @@ export interface ReduxState {
   };
 }
 
-export interface DashboardViewProps {
+export interface FeedsPageViewProps {
   articles: DisplayableArticle[];
 }
 

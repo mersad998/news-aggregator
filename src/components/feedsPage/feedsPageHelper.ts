@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { NewsResources } from '../../core/dataProvider/dataProviderTypes';
-import type { ReduxState, DisplayableArticle } from './DashboardTypes';
+import type { ReduxState, DisplayableArticle } from './feedsPageTypes';
 import { NYTimesArticleInterface, NewsApiArticleInterface, TheGuardianArticleInterface } from './newsTypes';
 
 const DATE_FORMAT = 'YYYY/MM/DD HH:mm:ss';
