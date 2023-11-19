@@ -6,7 +6,7 @@ import { NYTimesArticleInterface, NewsApiArticleInterface, TheGuardianArticleInt
 const DATE_FORMAT = 'YYYY/MM/DD HH:mm:ss';
 
 const extractCompatibleDataFromNewsApiData = (data?: NewsApiArticleInterface | null): DisplayableArticle[] => {
-  if (!data) return [];
+  if (!data || !Array.isArray(data.articles)) return [];
 
   return data.articles.map((article) => ({
     resource: NewsResources.NewsApi,
@@ -20,7 +20,7 @@ const extractCompatibleDataFromNewsApiData = (data?: NewsApiArticleInterface | n
   }));
 };
 const extractCompatibleDataFromTheGuardianData = (data?: TheGuardianArticleInterface | null): DisplayableArticle[] => {
-  if (!data) return [];
+  if (!data || !Array.isArray(data.results)) return [];
 
   return data.results.map((article) => ({
     resource: NewsResources.TheGuardian,
@@ -34,7 +34,7 @@ const extractCompatibleDataFromTheGuardianData = (data?: TheGuardianArticleInter
   }));
 };
 const extractCompatibleDataFromNewYorkTimesData = (data?: NYTimesArticleInterface | null): DisplayableArticle[] => {
-  if (!data) return [];
+  if (!data || !Array.isArray(data.docs)) return [];
 
   return data.docs.map((article) => ({
     resource: NewsResources.NewYorkTimes,

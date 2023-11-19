@@ -7,5 +7,10 @@ export const useStyles = makeStyles<Theme>(() => ({
     display: 'flex',
     flexDirection: 'column',
     flex: 1,
+
+    paddingInline: '1rem',
+    '@media (min-width: 800px)': {
+      paddingInline: '8rem',
+    },
   },
 }));

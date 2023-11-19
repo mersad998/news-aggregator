@@ -12,31 +12,29 @@ const FeedCardView: FC<FeedCardViewProps> = (props) => {
 
   if (images[0]) {
     return (
-      <div className={classes.divWithPadding}>
-        <div className={classes.container}>
-          <div className={classes.summery}>
-            <div className={classes.publisherInfo}>
-              <Typography color="ButtonFace" className={classes.publisherInfoText}>
-                {resource} / {sourceName} / {author}
-              </Typography>
-            </div>
-
-            <img src={images[0]} alt={title} className={classes.image} />
-
-            <Typography>{title}</Typography>
+      <div className={classes.container}>
+        <div className={classes.summery}>
+          <div className={classes.publisherInfo}>
+            <Typography color="ButtonFace" className={classes.publisherInfoText}>
+              {resource} / {sourceName} / {author}
+            </Typography>
           </div>
-          <div className={classes.content}>
-            <Typography>{description}</Typography>
-            <Typography color="ButtonFace">{date}</Typography>
-            <div className={classes.emptyArea}></div>
-            <Button
-              onClick={() => {
-                window.open(url, '_blank');
-              }}
-            >
-              continue to full page
-            </Button>
-          </div>
+
+          <img src={images[0]} alt={title} className={classes.image} />
+
+          <Typography>{title}</Typography>
+        </div>
+        <div className={classes.content}>
+          <Typography>{description}</Typography>
+          <Typography color="ButtonFace">{date}</Typography>
+          <div className={classes.emptyArea}></div>
+          <Button
+            onClick={() => {
+              window.open(url, '_blank');
+            }}
+          >
+            continue to full page
+          </Button>
         </div>
       </div>
     );
