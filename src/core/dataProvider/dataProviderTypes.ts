@@ -4,6 +4,7 @@ import type { AxiosResponse } from 'axios';
 export enum NewsResources {
   NewsApi = 'NEWS_API',
   TheGuardian = 'THE_GUARDIAN',
+  NewYorkTimes = 'NEW_YORK_TIMES',
 }
 
 export type ApiKeyInformation = { key: string; value: string };
@@ -24,10 +25,15 @@ export interface TheGuardianParameters {
   page: number;
 }
 
-// required options to call fetch data function
-export interface FetchDataOptions {
-  source: NewsResources;
-  parameters: NewsApiParameters | TheGuardianParameters;
+export interface NewYorkTimesParameters {
+  q: string;
 }
 
-export type FetchData = (options: FetchDataOptions) => Promise<AxiosResponse['data'] | void>;
+// required options to call fetch data function
+export interface FetchDataOptions {
+  resource: NewsResources.NewYorkTimes | NewsResources.TheGuardian | NewsResources.NewsApi;
+  parameters: NewsApiParameters | TheGuardianParameters | NewYorkTimesParameters;
+  valueKeyName?: string;
+}
+
+export type FetchData = (options: FetchDataOptions, reduxHelper: any) => Promise<AxiosResponse['data']>;
