@@ -6,17 +6,17 @@ import { useStyles } from './feedCard.style';
 
 const FeedCardView: FC<FeedCardViewProps> = (props) => {
   const { article } = props;
-  const { author, content, date, description, images, resource, sourceName, title, url } = article;
+  const { author, date, description, images, resource, sourceName, title, url } = article;
 
   const classes = useStyles();
 
   if (images[0]) {
     return (
-      <div className={classes.padder}>
+      <div className={classes.divWithPadding}>
         <div className={classes.container}>
           <div className={classes.summery}>
             <div className={classes.publisherInfo}>
-              <Typography className={classes.publisherInfoText}>
+              <Typography color="ButtonFace" className={classes.publisherInfoText}>
                 {resource} / {sourceName} / {author}
               </Typography>
             </div>
@@ -43,16 +43,27 @@ const FeedCardView: FC<FeedCardViewProps> = (props) => {
   }
 
   return (
-    <div className={classes.container}>
-      <div className={classes.summery}>
-        <Typography className={classes.publisherInfoText}>
-          {resource} / {sourceName} / {author}
-        </Typography>
+    <div className={classes.divWithPadding}>
+      <div className={classes.container}>
+        <div className={classes.summery}>
+          <Typography color="ButtonFace" className={classes.publisherInfoText}>
+            {resource} / {sourceName} / {author}
+          </Typography>
 
-        <Typography>{title}</Typography>
-      </div>
-      <div className={classes.content}>
-        <Typography>{description}</Typography>
+          <Typography>{title}</Typography>
+        </div>
+        <div className={classes.content}>
+          <Typography>{description}</Typography>
+          <Typography color="ButtonFace">{date}</Typography>
+          <div className={classes.emptyArea}></div>
+          <Button
+            onClick={() => {
+              window.open(url, '_blank');
+            }}
+          >
+            continue to full page
+          </Button>
+        </div>
       </div>
     </div>
   );

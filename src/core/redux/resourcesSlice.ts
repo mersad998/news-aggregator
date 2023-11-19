@@ -1,7 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { fetchData } from './actions';
-
 import type {
   NewsApiArticleInterface,
   TheGuardianArticleInterface,
@@ -9,6 +7,7 @@ import type {
 } from '../../components/feedsPage/newsTypes';
 import { ResourcesState } from './types';
 import { NewsResources } from '../dataProvider/dataProviderTypes';
+import NYTMockData from '../../core/NYTMockData.json';
 
 // ---------------------------------- action interfaces ----------------------------------
 interface SetDataPayload<T> {
@@ -54,23 +53,13 @@ const resourcesSlice = createSlice({
     },
     setError: (state, action: PayloadAction<SetErrorPayload>) => {
       const { resourceName } = action.payload;
-      state[resourceName].hasError = true;
+      // TODO : this is correct
+      // state[resourceName].hasError = true;
+      // state[resourceName].isLoading = false;
+      // fixme: this is temporary
+      state[resourceName].data = NYTMockData.response as any;
       state[resourceName].isLoading = false;
     },
-  },
-  extraReducers: (builder) => {
-    builder.addCase(fetchData.pending, (state, action) => {
-      const { resourceName } = action.meta.arg;
-      state[resourceName].isLoading = true;
-    });
-    builder.addCase(fetchData.fulfilled, (state, action) => {
-      const { resourceName } = action.meta.arg;
-      state[resourceName].isLoading = false;
-    });
-    builder.addCase(fetchData.rejected, (state, action) => {
-      const { resourceName } = action.meta.arg;
-      state[resourceName].isLoading = false;
-    });
   },
 });
 

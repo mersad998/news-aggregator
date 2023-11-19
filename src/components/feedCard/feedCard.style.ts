@@ -3,7 +3,7 @@ import makeStyles from '@mui/styles/makeStyles';
 import type { Theme } from '@mui/material';
 
 export const useStyles = makeStyles<Theme>(() => ({
-  padder: {
+  divWithPadding: {
     paddingInline: '1rem',
     '@media (min-width: 800px)': {
       paddingInline: '8rem',
@@ -29,12 +29,7 @@ export const useStyles = makeStyles<Theme>(() => ({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    // position: 'absolute',
-    // top: 0,
-    // left: 0,
     padding: '2px 4px',
-    // borderRight: '1px solid gray',
-    // borderBottom: '1px solid gray',
     borderRadius: 4,
   },
   image: {
@@ -54,11 +49,17 @@ export const useStyles = makeStyles<Theme>(() => ({
     display: 'flex',
     flexDirection: 'column',
     flex: '1 1 40%',
+    '@media (min-width: 800px)': {
+      borderRight: '1px dashed gray',
+    },
   },
   content: {
     display: 'flex',
     flexDirection: 'column',
     flex: '1 1 60%',
+    '@media (min-width: 800px)': {
+      padding: 8,
+    },
   },
   emptyArea: {
     flex: 1,

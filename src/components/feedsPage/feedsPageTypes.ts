@@ -30,7 +30,6 @@ export interface DisplayableArticle {
   date: string;
   title: string;
   description: string;
-  content: string;
   author: string;
   url: string;
   images: string[];
