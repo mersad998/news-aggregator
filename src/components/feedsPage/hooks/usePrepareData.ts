@@ -42,9 +42,6 @@ const usePrepareData = (): UsePrepareData => {
     theGuardianData,
     newYorkTimesData,
   });
-  console.log('newsApiData: ', newsApiData);
-  console.log('theGuardianData: ', theGuardianData);
-  console.log('newYorkTimesData: ', newYorkTimesData);
 
   mergedData.sort((a, b) => {
     const dateA = moment(a.date, DATE_FORMAT);

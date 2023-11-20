@@ -1,7 +1,5 @@
 export const EnTranslations = {
-  translation: {
-    menu: {
-      home: 'home',
-    },
+  menu: {
+    home: 'home',
   },
-};
+} as const;

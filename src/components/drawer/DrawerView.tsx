@@ -9,18 +9,11 @@ const DrawerView: FC<DrawerViewProps> = (props) => {
 
   const classes = useStyles({ openDrawerWidth, closeDrawerWidth });
 
-  const createMenuItem = (
-    item: MenuItemInterface,
-    minimalMode: boolean,
-    isLastItem: boolean,
-  ): ReactElement => {
+  const createMenuItem = (item: MenuItemInterface, minimalMode: boolean, isLastItem: boolean): ReactElement => {
     const { title, icon, link } = item;
 
     return (
-      <MenuItem
-        key={Math.random()}
-        className={`${classes.menuItem} ${isLastItem ? classes.ignoreBorderBottom : ''}`}
-      >
+      <MenuItem key={Math.random()} className={`${classes.menuItem} ${isLastItem ? classes.ignoreBorderBottom : ''}`}>
         <a href={link} className={classes.textAndIcon}>
           {icon}
           {!minimalMode && <Typography>{title}</Typography>}
