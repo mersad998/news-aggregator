@@ -1,9 +1,10 @@
 import moment from 'moment';
+
+import type { NYTimesArticleInterface, NewsApiArticleInterface, TheGuardianArticleInterface } from './newsTypes';
 import { NewsResources } from '../../core/dataProvider/dataProviderTypes';
 import type { ReduxState, DisplayableArticle } from './feedsPageTypes';
-import { NYTimesArticleInterface, NewsApiArticleInterface, TheGuardianArticleInterface } from './newsTypes';
 
-const DATE_FORMAT = 'YYYY/MM/DD HH:mm:ss';
+export const DATE_FORMAT = 'YYYY/MM/DD HH:mm:ss';
 
 const extractCompatibleDataFromNewsApiData = (data?: NewsApiArticleInterface | null): DisplayableArticle[] => {
   if (!data || !Array.isArray(data.articles)) return [];
@@ -48,7 +49,7 @@ const extractCompatibleDataFromNewYorkTimesData = (data?: NYTimesArticleInterfac
   }));
 };
 
-export const mergeAndSortArticles = (data: {
+export const mergeArticles = (data: {
   newsApiData: ReduxState[NewsResources.NewsApi];
   theGuardianData: ReduxState[NewsResources.TheGuardian];
   newYorkTimesData: ReduxState[NewsResources.NewYorkTimes];
@@ -61,19 +62,16 @@ export const mergeAndSortArticles = (data: {
     ...extractCompatibleDataFromNewYorkTimesData(newYorkTimesData?.data),
   ];
 
-  mergedData.sort((a, b) => {
-    const dateA = moment(a.date, DATE_FORMAT);
-    const dateB = moment(b.date, DATE_FORMAT);
-    return dateA.isBefore(dateB) ? 1 : -1;
-  });
-
   return mergedData;
 };
 
-export const debounce = (fn: Function, ms = 300) => {
-  let timeoutId: ReturnType<typeof setTimeout>;
-  return function (this: any, ...args: any[]) {
+export const debounce = <T extends (...args: any[]) => void>(callback: T, delay: number): any => {
+  let timeoutId: number;
+
+  return (...args: Parameters<T>): void => {
     clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => fn.apply(this, args), ms);
+    timeoutId = setTimeout(() => {
+      callback(...args);
+    }, delay);
   };
 };

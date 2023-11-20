@@ -1,52 +1,43 @@
-import { memo, type FC, useEffect, ChangeEvent } from 'react';
-import { useSelector } from 'react-redux';
+import { memo, type FC, ChangeEvent } from 'react';
 
 import LoadingBox from '../LoadingBox';
 import FeedsPageView from './feedsPageView';
-import { mergeAndSortArticles } from './feedsPageHelper';
-
-import { NewsResources } from '../../core/dataProvider/dataProviderTypes';
 import useFetchData from './hooks/useFetchData';
-
-import type { ReduxState } from './feedsPageTypes';
+import usePrepareData from './hooks/usePrepareData';
+import { debounce } from './feedsPageHelper';
 
 const FeedsPageController: FC = () => {
   const { setBulkQueryParameters } = useFetchData();
+  const { data, isLoading, onResourceSelect } = usePrepareData();
 
-  const newsApiData = useSelector<{ resources: ReduxState }>((state) => state.resources[NewsResources.NewsApi]) as ReduxState[NewsResources.NewsApi];
-  const theGuardianData = useSelector<{ resources: ReduxState }>(
-    (state) => state.resources[NewsResources.TheGuardian],
-  ) as ReduxState[NewsResources.TheGuardian];
-  const newYorkTimesData = useSelector<{ resources: ReduxState }>(
-    (state) => state.resources[NewsResources.NewYorkTimes],
-  ) as ReduxState[NewsResources.NewYorkTimes];
-
-  if (newsApiData?.isLoading && theGuardianData?.isLoading && newYorkTimesData?.isLoading) {
+  if (isLoading) {
     return <LoadingBox />;
   }
 
-  const mergedData = mergeAndSortArticles({
-    newsApiData,
-    theGuardianData,
-    newYorkTimesData,
-  });
-
-  const onSearch = (event: ChangeEvent<HTMLInputElement>): void => {
+  const onSearch = debounce((event: ChangeEvent<HTMLInputElement>): void => {
     const value = event.target.value as string;
     setBulkQueryParameters({ query: value });
-  };
+  }, 500);
 
-  const onPageChange = (event: ChangeEvent<HTMLInputElement>): void => {
+  const onPageChange = debounce((event: ChangeEvent<HTMLInputElement>): void => {
     const value = event.target.value as string;
     setBulkQueryParameters({ page: +value });
-  };
+  }, 500);
 
-  const onPageSizeChange = (event: ChangeEvent<HTMLInputElement>): void => {
+  const onPageSizeChange = debounce((event: ChangeEvent<HTMLInputElement>): void => {
     const value = event.target.value as string;
     setBulkQueryParameters({ perPage: +value });
-  };
+  }, 500);
 
-  return <FeedsPageView articles={mergedData} onSearch={onSearch} onPageChange={onPageChange} onPageSizeChange={onPageSizeChange} />;
+  return (
+    <FeedsPageView
+      articles={data}
+      onSearch={onSearch}
+      onPageChange={onPageChange}
+      onPageSizeChange={onPageSizeChange}
+      onResourceSelect={onResourceSelect}
+    />
+  );
 };
 
 export default memo(FeedsPageController, () => true);

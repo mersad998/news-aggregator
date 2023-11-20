@@ -1,6 +1,11 @@
-import { ChangeEvent } from 'react';
-import { NewYorkTimesParameters, NewsApiParameters, NewsResources, TheGuardianParameters } from '../../core/dataProvider/dataProviderTypes';
-import { NYTimesArticleInterface, NewsApiArticleInterface, TheGuardianArticleInterface } from './newsTypes';
+import type { ChangeEvent } from 'react';
+import {
+  type NewsApiParameters,
+  type TheGuardianParameters,
+  type NewYorkTimesParameters,
+  NewsResources,
+} from '../../core/dataProvider/dataProviderTypes';
+import type { NYTimesArticleInterface, NewsApiArticleInterface, TheGuardianArticleInterface } from './newsTypes';
 
 export interface ReduxState {
   [NewsResources.NewsApi]?: {
@@ -27,7 +32,10 @@ export interface ReduxState {
 
 export interface FeedsPageViewProps {
   articles: DisplayableArticle[];
+
   onSearch: (event: ChangeEvent<HTMLInputElement>) => void;
+  onResourceSelect: (selectedResources: string[]) => void;
+
   onPageChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onPageSizeChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }
