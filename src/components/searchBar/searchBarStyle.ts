@@ -4,8 +4,9 @@ import type { Theme } from '@mui/material';
 
 export const useStyles = makeStyles<Theme>(() => ({
   container: {
-    width: '100%',
     display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
     alignSelf: 'center',
     minHeight: 80,
     justifyContent: 'space-between',
@@ -16,5 +17,9 @@ export const useStyles = makeStyles<Theme>(() => ({
     borderRadius: 4,
     paddingInline: 8,
     boxSizing: 'border-box',
+
+    '@media (min-width: 800px)': {
+      flexDirection: 'row',
+    },
   },
 }));
