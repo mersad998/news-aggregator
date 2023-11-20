@@ -5,9 +5,10 @@ import { FeedCard } from '../feedCard';
 import { SearchBar } from '../searchBar';
 
 import type { FeedsPageViewProps } from './feedsPageTypes';
+import { Pagination } from '@mui/material';
 
 const FeedsPageView: FC<FeedsPageViewProps> = (props) => {
-  const { articles, onSearch, onPageChange, onPageSizeChange, onResourceSelect } = props;
+  const { articles, totalCount, onSearch, onPageChange, onResourceSelect } = props;
   const classes = useStyles();
 
   return (
@@ -17,6 +18,13 @@ const FeedsPageView: FC<FeedsPageViewProps> = (props) => {
       {articles.map((article, index) => (
         <FeedCard article={article} key={index} />
       ))}
+
+      <Pagination
+        count={totalCount}
+        onChange={(_event, selectedPage) => {
+          onPageChange(selectedPage);
+        }}
+      />
     </div>
   );
 };

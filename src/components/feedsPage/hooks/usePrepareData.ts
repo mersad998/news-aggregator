@@ -10,6 +10,7 @@ interface UsePrepareData {
   data: DisplayableArticle[];
   isLoading: boolean;
   onResourceSelect: (selectedResources: string[]) => void;
+  totalCount: number;
 }
 
 const usePrepareData = (): UsePrepareData => {
@@ -32,9 +33,7 @@ const usePrepareData = (): UsePrepareData => {
   const isLoading = !!newsApiData?.isLoading && !!theGuardianData?.isLoading && !!newYorkTimesData?.isLoading;
 
   const onResourceSelect = debounce((selectedResources: string[]): void => {
-    setSelectedResources(
-      (allSelectableResources as string[]).filter((resource) => selectedResources.includes(resource)),
-    );
+    setSelectedResources((allSelectableResources as string[]).filter((resource) => selectedResources.includes(resource)));
   }, 500);
 
   // merge and sort data
@@ -43,6 +42,9 @@ const usePrepareData = (): UsePrepareData => {
     theGuardianData,
     newYorkTimesData,
   });
+  console.log('newsApiData: ', newsApiData);
+  console.log('theGuardianData: ', theGuardianData);
+  console.log('newYorkTimesData: ', newYorkTimesData);
 
   mergedData.sort((a, b) => {
     const dateA = moment(a.date, DATE_FORMAT);
@@ -53,10 +55,14 @@ const usePrepareData = (): UsePrepareData => {
 
   const filteredData = mergedData.filter((article) => selectedResources.includes(article.resource));
 
+  const totalCount =
+    (newsApiData?.data?.totalResults ?? 0) + (theGuardianData?.data?.total ?? 0) + (newYorkTimesData?.data?.meta.time ?? 0);
+
   return {
     data: filteredData,
     isLoading,
     onResourceSelect,
+    totalCount,
   };
 };
 

@@ -8,7 +8,7 @@ import { debounce } from './feedsPageHelper';
 
 const FeedsPageController: FC = () => {
   const { setBulkQueryParameters } = useFetchData();
-  const { data, isLoading, onResourceSelect } = usePrepareData();
+  const { data, isLoading, totalCount, onResourceSelect } = usePrepareData();
 
   if (isLoading) {
     return <LoadingBox />;
@@ -19,20 +19,19 @@ const FeedsPageController: FC = () => {
     setBulkQueryParameters({ query: value });
   }, 500);
 
-  const onPageChange = debounce((event: ChangeEvent<HTMLInputElement>): void => {
-    const value = event.target.value as string;
-    setBulkQueryParameters({ page: +value });
+  const onPageChange = debounce((page: number): void => {
+    setBulkQueryParameters({ page });
   }, 500);
 
-  const onPageSizeChange = debounce((event: ChangeEvent<HTMLInputElement>): void => {
-    const value = event.target.value as string;
-    setBulkQueryParameters({ perPage: +value });
+  const onPageSizeChange = debounce((pageSize: number): void => {
+    setBulkQueryParameters({ perPage: +pageSize });
   }, 500);
 
   return (
     <FeedsPageView
       articles={data}
       onSearch={onSearch}
+      totalCount={totalCount}
       onPageChange={onPageChange}
       onPageSizeChange={onPageSizeChange}
       onResourceSelect={onResourceSelect}
