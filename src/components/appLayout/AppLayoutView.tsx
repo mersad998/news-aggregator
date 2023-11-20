@@ -18,11 +18,7 @@ const AppLayoutView: FC<AppLayoutViewProps> = forwardRef((props, forwardedRef) =
       <Header title={APP_NAME} onHamburgerButtonClick={onHamburgerButtonClick} />
 
       <div className={classes.headerAndContentContainer}>
-        <Drawer
-          ref={forwardedRef}
-          openDrawerWidth={OPEN_DRAWER_WIDTH}
-          closeDrawerWidth={CLOSE_DRAWER_WIDTH}
-        />
+        <Drawer ref={forwardedRef} openDrawerWidth={OPEN_DRAWER_WIDTH} closeDrawerWidth={CLOSE_DRAWER_WIDTH} />
         <div className={classes.contentContainer}>{children}</div>
       </div>
     </div>

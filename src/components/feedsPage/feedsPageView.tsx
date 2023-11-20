@@ -7,12 +7,12 @@ import { SearchBar } from '../searchBar';
 import type { FeedsPageViewProps } from './feedsPageTypes';
 
 const FeedsPageView: FC<FeedsPageViewProps> = (props) => {
-  const { articles } = props;
+  const { articles, onSearch, onPageChange, onPageSizeChange } = props;
   const classes = useStyles();
 
   return (
     <div className={classes.container}>
-      <SearchBar />
+      <SearchBar onSearch={onSearch} onPageChange={onPageChange} onPageSizeChange={onPageSizeChange} />
 
       {articles.map((article) => (
         <FeedCard article={article} />

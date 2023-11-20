@@ -15,24 +15,27 @@ export type GetBaseUrlByResourceName = (resource: NewsResources) => {
 };
 
 export interface NewsApiParameters {
-  q: string;
-  from: string;
-  sortBy: string;
+  page: number;
+  pageSize: number;
+  q?: string;
 }
 
 export interface TheGuardianParameters {
-  q: string;
   page: number;
+  perPage: number;
+  q?: string;
 }
 
 export interface NewYorkTimesParameters {
-  q: string;
+  page: number;
+  pageSize: number;
+  q?: string;
 }
 
 // required options to call fetch data function
 export interface FetchDataOptions {
   resource: NewsResources.NewYorkTimes | NewsResources.TheGuardian | NewsResources.NewsApi;
-  parameters: NewsApiParameters | TheGuardianParameters | NewYorkTimesParameters;
+  parameters?: NewsApiParameters | TheGuardianParameters | NewYorkTimesParameters;
   valueKeyName?: string;
 }
 

@@ -3,12 +3,18 @@ import {
   NewsApiArticleInterface,
   TheGuardianArticleInterface,
 } from '../../components/feedsPage/newsTypes';
-import { NewsResources } from '../dataProvider/dataProviderTypes';
+import {
+  NewYorkTimesParameters,
+  NewsApiParameters,
+  NewsResources,
+  TheGuardianParameters,
+} from '../dataProvider/dataProviderTypes';
 
 export interface ResourceState<T> {
   data: T | null;
   hasError: boolean;
   isLoading: boolean;
+  parameters: NewsApiParameters | TheGuardianParameters | NewYorkTimesParameters;
 }
 
 export interface ResourcesState {

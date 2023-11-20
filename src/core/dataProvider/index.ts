@@ -17,6 +17,7 @@ const getDataFromApi: FetchData = async (payload, { dispatch }) => {
     const response = await axios.get(`${baseUrl}${queryParameters}`, { timeout: 10000 });
     const data = valueKeyName ? response.data[valueKeyName] : response.data;
 
+    console.log('{ resourceName: resource, data }: ', { resourceName: resource, data });
     dispatch(setData({ resourceName: resource, data }));
     return data;
   } catch (error) {
