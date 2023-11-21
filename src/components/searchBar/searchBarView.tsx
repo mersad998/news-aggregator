@@ -5,7 +5,13 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
-import { FormControl, InputLabel, TextField } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import PersonIcon from '@mui/icons-material/Person';
+import SettingsIcon from '@mui/icons-material/Settings';
+import PublicIcon from '@mui/icons-material/Public';
+import CategoryIcon from '@mui/icons-material/Category';
+import { Button, FormControl, InputLabel, Popover, TextField } from '@mui/material';
+import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
 
 import { useStyles } from './searchBarStyle';
 import { MenuProps, resourceSelectItems } from './searchBarHelper';
@@ -20,7 +26,7 @@ const SearchBarView: FC<SearchBarViewProps> = (props) => {
 
   return (
     <div className={classes.container}>
-      <FormControl sx={{ m: 1, width: 300 }}>
+      <FormControl sx={{ m: 1 }}>
         <InputLabel id="resource-select-label">select resources</InputLabel>
         <Select
           style={{ marginInline: 4, flex: 1 }}
@@ -46,7 +52,46 @@ const SearchBarView: FC<SearchBarViewProps> = (props) => {
         </Select>
       </FormControl>
 
-      <TextField onChange={onSearch} placeholder="search anything" />
+      <div>
+        <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+          <SearchIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+          <TextField onChange={onSearch} id="bulk" label="search anything" variant="standard" />
+        </Box>
+
+        <PopupState variant="popover" popupId="demo-popup-popover">
+          {(popupState) => (
+            <div>
+              <Button {...bindTrigger(popupState)} variant="outlined" sx={{ marginTop: 2 }} startIcon={<SettingsIcon />}>
+                Customize your feeds
+              </Button>
+              <Popover
+                {...bindPopover(popupState)}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'center',
+                }}
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'center',
+                }}
+              >
+                <Box sx={{ display: 'flex', alignItems: 'flex-end', padding: 2 }}>
+                  <PersonIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+                  <TextField onChange={onSearch} id="author" label="author" variant="standard" />
+                </Box>
+                <Box sx={{ display: 'flex', alignItems: 'flex-end', padding: 2 }}>
+                  <CategoryIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+                  <TextField onChange={onSearch} id="category" label="category" variant="standard" />
+                </Box>
+                <Box sx={{ display: 'flex', alignItems: 'flex-end', padding: 2 }}>
+                  <PublicIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+                  <TextField onChange={onSearch} id="sources" label="sources" variant="standard" />
+                </Box>
+              </Popover>
+            </div>
+          )}
+        </PopupState>
+      </div>
     </div>
   );
 };

@@ -2,33 +2,43 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 
-import { NewYorkTimesParameters, NewsApiParameters, NewsResources, TheGuardianParameters } from '../../../core/dataProvider/dataProviderTypes';
+import {
+  NewYorkTimesParameters,
+  NewsApiParameters,
+  NewsResources,
+  TheGuardianParameters,
+} from '../../../core/dataProvider/dataProviderTypes';
 import { fetchData } from '../../../core/dataProvider';
-import { setBulkParameters } from '../../../core/redux/resourcesSlice';
+import { setBulkParameters, setParameter } from '../../../core/redux/resourcesSlice';
 import { ReduxState } from '../feedsPageTypes';
 import { useEffect } from 'react';
 
 type SetBulkQueryParameters = (parameters: { query?: string; page?: number; perPage?: number }) => void;
+type SetQueryParameterToResource = (
+  parameters: Partial<NewsApiParameters | TheGuardianParameters | NewYorkTimesParameters>,
+  resource: NewsResources.NewsApi | NewsResources.TheGuardian | NewsResources.NewYorkTimes,
+) => void;
 
 interface UseFetchData {
   setBulkQueryParameters: SetBulkQueryParameters;
+  setQueryParameterToResource: SetQueryParameterToResource;
 }
 
 const useFetchData = (): UseFetchData => {
   const dispatch: ThunkDispatch<void, void, AnyAction> = useDispatch();
 
+  // gather all parameters from redux store in separate variables for each resource
   const newsApiCurrentParameters = useSelector<{ resources: ReduxState }>(
     (state) => state.resources[NewsResources.NewsApi]?.parameters,
   ) as NewsApiParameters;
-
   const theGuardianCurrentParameters = useSelector<{ resources: ReduxState }>(
     (state) => state.resources[NewsResources.TheGuardian]?.parameters,
   ) as TheGuardianParameters;
-
   const newYorkTimesCurrentParameters = useSelector<{ resources: ReduxState }>(
     (state) => state.resources[NewsResources.NewYorkTimes]?.parameters,
   ) as NewYorkTimesParameters;
 
+  // define three functions to fetch data from each resource
   const fetchNewsApiDada = (): void => {
     dispatch(
       fetchData({
@@ -37,7 +47,6 @@ const useFetchData = (): UseFetchData => {
       }),
     );
   };
-
   const fetchTheGuardianDada = (): void => {
     dispatch(
       fetchData({
@@ -47,7 +56,6 @@ const useFetchData = (): UseFetchData => {
       }),
     );
   };
-
   const fetchNewYorkTimesDada = (): void => {
     dispatch(
       fetchData({
@@ -58,20 +66,37 @@ const useFetchData = (): UseFetchData => {
     );
   };
 
+  // call fetch functions when parameters are changed
   useEffect(() => {
     fetchNewsApiDada();
-  }, [newsApiCurrentParameters.q, newsApiCurrentParameters.page, newsApiCurrentParameters.pageSize]);
-
+  }, [
+    newsApiCurrentParameters.q,
+    newsApiCurrentParameters.page,
+    newsApiCurrentParameters.pageSize,
+    newsApiCurrentParameters.country,
+    newsApiCurrentParameters.category,
+  ]);
   useEffect(() => {
     fetchTheGuardianDada();
-  }, [theGuardianCurrentParameters.q, theGuardianCurrentParameters.page, theGuardianCurrentParameters.perPage]);
-
+  }, [
+    theGuardianCurrentParameters.q,
+    theGuardianCurrentParameters.page,
+    theGuardianCurrentParameters.perPage,
+    theGuardianCurrentParameters.section,
+    theGuardianCurrentParameters.tag,
+  ]);
   useEffect(() => {
     fetchNewYorkTimesDada();
-  }, [newYorkTimesCurrentParameters.q, newYorkTimesCurrentParameters.page, newYorkTimesCurrentParameters.pageSize]);
+  }, [
+    newYorkTimesCurrentParameters.q,
+    newYorkTimesCurrentParameters.page,
+    newYorkTimesCurrentParameters.pageSize,
+    newYorkTimesCurrentParameters.begin_date,
+    newYorkTimesCurrentParameters.end_date,
+  ]);
 
+  // bulk set parameters will be used to set parameters for all resources
   const setBulkQueryParameters: SetBulkQueryParameters = (newParameters) => {
-    console.log('newParameters: ', newParameters);
     if ('query' in newParameters) {
       // search has been changed
       dispatch(
@@ -104,7 +129,17 @@ const useFetchData = (): UseFetchData => {
     }
   };
 
-  return { setBulkQueryParameters };
+  // set query parameter to a specific resource
+  const setQueryParameterToResource: SetQueryParameterToResource = (newParameters, resource) => {
+    dispatch(
+      setParameter({
+        resource: resource,
+        parameters: newParameters,
+      }),
+    );
+  };
+
+  return { setBulkQueryParameters, setQueryParameterToResource };
 };
 
 export default useFetchData;

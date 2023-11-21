@@ -1,3 +1,4 @@
+// parse json with try catch and generic type
 export const parseJSON = <T>(stringifiedJson: string): T | null => {
   let parsed: T | null = null;
 
@@ -10,10 +11,12 @@ export const parseJSON = <T>(stringifiedJson: string): T | null => {
   return parsed;
 };
 
+// write to local storage indirectly
 export const writeToLocalStorage = (key: string, value: unknown): void => {
   localStorage.setItem(key, JSON.stringify(value ?? ''));
 };
 
+// read from local storage indirectly
 export const readFromLocalStorage = <T>(key: string): T | null => {
   const item: string | null = localStorage.getItem(key);
 
@@ -24,6 +27,7 @@ export const readFromLocalStorage = <T>(key: string): T | null => {
   return parseJSON<T>(item) ?? null;
 };
 
+// remove from local storage indirectly
 export const removeFromLocalStorage = (key: string): void => {
   localStorage.removeItem(key);
 };

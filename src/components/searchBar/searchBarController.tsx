@@ -11,6 +11,7 @@ const SearchBarController: FC<SearchBarControllerProps> = (props) => {
 
   const [selectedResources, setSelectedResources] = useState<string[]>(allSelectableResources);
 
+  // limit the articles locally by selected resources
   const _onResourceSelect = (event: SelectChangeEvent<typeof selectedResources>): void => {
     const value = event.target.value;
     const valueAsArray = typeof value === 'string' ? value.split(',') : value;
@@ -19,9 +20,7 @@ const SearchBarController: FC<SearchBarControllerProps> = (props) => {
     onResourceSelect(valueAsArray);
   };
 
-  return (
-    <SearchBarView onSearch={onSearch} onResourceSelect={_onResourceSelect} selectedResources={selectedResources} />
-  );
+  return <SearchBarView onSearch={onSearch} onResourceSelect={_onResourceSelect} selectedResources={selectedResources} />;
 };
 
 export default SearchBarController;

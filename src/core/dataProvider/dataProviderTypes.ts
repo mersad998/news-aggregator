@@ -18,18 +18,24 @@ export interface NewsApiParameters {
   page: number;
   pageSize: number;
   q?: string;
+  country?: string;
+  category?: string;
 }
 
 export interface TheGuardianParameters {
   page: number;
   perPage: number;
   q?: string;
+  section?: string;
+  tag?: string;
 }
 
 export interface NewYorkTimesParameters {
   page: number;
   pageSize: number;
   q?: string;
+  begin_date?: string;
+  end_date?: string;
 }
 
 // required options to call fetch data function

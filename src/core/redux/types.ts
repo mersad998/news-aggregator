@@ -22,3 +22,23 @@ export interface ResourcesState {
   [NewsResources.TheGuardian]: ResourceState<TheGuardianArticleInterface>;
   [NewsResources.NewYorkTimes]: ResourceState<NYTimesArticleInterface>;
 }
+
+export interface SetDataPayload<T> {
+  resourceName: keyof ResourcesState;
+  data: T;
+}
+
+export interface SetErrorPayload {
+  resourceName: keyof ResourcesState;
+}
+
+export interface SetBulkParametersPayload {
+  [NewsResources.NewsApi]: Partial<NewsApiParameters>;
+  [NewsResources.TheGuardian]: Partial<TheGuardianParameters>;
+  [NewsResources.NewYorkTimes]: Partial<NewYorkTimesParameters>;
+}
+
+export interface SetParameterPayload {
+  resource: NewsResources.NewsApi | NewsResources.TheGuardian | NewsResources.NewYorkTimes;
+  parameters: Partial<NewsApiParameters | TheGuardianParameters | NewYorkTimesParameters>;
+}

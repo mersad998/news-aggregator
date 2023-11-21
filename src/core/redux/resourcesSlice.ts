@@ -1,27 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import type { NewsApiArticleInterface, TheGuardianArticleInterface, NYTimesArticleInterface } from '../../components/feedsPage/newsTypes';
 import { ResourcesState } from './types';
-import { NewsApiParameters, NewsResources, NewYorkTimesParameters, TheGuardianParameters } from '../dataProvider/dataProviderTypes';
-import NYTMockData from '../../core/NYTMockData.json';
+import { NewsResources } from '../dataProvider/dataProviderTypes';
 
-// ---------------------------------- action interfaces ----------------------------------
-interface SetDataPayload<T> {
-  resourceName: keyof ResourcesState;
-  data: T;
-}
+import type { SetDataPayload, SetErrorPayload, SetBulkParametersPayload, SetParameterPayload } from './types';
+import type {
+  NewsApiArticleInterface,
+  TheGuardianArticleInterface,
+  NYTimesArticleInterface,
+} from '../../components/feedsPage/newsTypes';
 
-interface SetErrorPayload {
-  resourceName: keyof ResourcesState;
-}
-
-interface SetBulkParametersPayload {
-  [NewsResources.NewsApi]: Partial<NewsApiParameters>;
-  [NewsResources.TheGuardian]: Partial<TheGuardianParameters>;
-  [NewsResources.NewYorkTimes]: Partial<NewYorkTimesParameters>;
-}
-
-// ---------------------------------- initial data ----------------------------------
+//  initial data
 const initialState: ResourcesState = {
   [NewsResources.NewsApi]: {
     data: null,
@@ -52,7 +41,7 @@ const initialState: ResourcesState = {
   },
 };
 
-// ---------------------------------- slice ----------------------------------
+// create slice
 const resourcesSlice = createSlice({
   name: 'newsResources',
   initialState,
@@ -73,16 +62,20 @@ const resourcesSlice = createSlice({
 
     setError: (state, action: PayloadAction<SetErrorPayload>) => {
       const { resourceName } = action.payload;
-      // TODO : this is correct
-      // state[resourceName].hasError = true;
-      // state[resourceName].isLoading = false;
-      // fixme: this is temporary
-      state[resourceName].data = NYTMockData.response as any;
+      state[resourceName].hasError = true;
       state[resourceName].isLoading = false;
+
+      /*
+       * you can uncomment this line to use mock data 👇
+       */
+
+      // state[resourceName].data = NYTMockData.response as any;
+      // state[resourceName].isLoading = false;
     },
 
-    setParameter: () => {
-      // it can be implemented in the future (for single resource)
+    setParameter: (state, action: PayloadAction<SetParameterPayload>) => {
+      const { resource, parameters } = action.payload;
+      state[resource].parameters = { ...state[resource].parameters, ...parameters };
     },
 
     setBulkParameters: (state, action: PayloadAction<SetBulkParametersPayload>) => {
@@ -99,6 +92,8 @@ const resourcesSlice = createSlice({
   },
 });
 
-// ---------------------------------- actions ----------------------------------
-export const { setData, setError, setBulkParameters } = resourcesSlice.actions;
+// export actions
+export const { setData, setError, setParameter, setBulkParameters } = resourcesSlice.actions;
+
+// export reducer
 export default resourcesSlice.reducer;

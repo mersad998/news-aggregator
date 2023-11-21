@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Theme, createTheme } from '@mui/material';
 
-const useSettings = (): {
+interface UseSettings {
   colorMode: {
     toggleColorMode: () => void;
   };
@@ -10,28 +10,34 @@ const useSettings = (): {
   };
   theme: Theme;
   selectedLanguage: 'en' | 'de';
-} => {
-  const [mode, setMode] = useState<'light' | 'dark'>('dark');
-  const [language, setLanguage] = useState<'en' | 'de'>('en');
+}
 
+// this hook will provide the accessability to setting context where ever needed
+const useSettings = (): UseSettings => {
+  const [mode, setMode] = useState<'light' | 'dark'>('dark'); // default mode is dark
+  const [language, setLanguage] = useState<'en' | 'de'>('en'); // default language is english
+
+  // this function will toggle the color mode
   const colorMode = useMemo(
     () => ({
-      toggleColorMode: () => {
+      toggleColorMode: (): void => {
         setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
       },
     }),
     [],
   );
 
+  // this function will toggle the language
   const languageSettings = useMemo(
     () => ({
-      toggleLanguage: () => {
+      toggleLanguage: (): void => {
         setLanguage((prevLanguage) => (prevLanguage === 'en' ? 'de' : 'en'));
       },
     }),
     [],
   );
 
+  // this function will create a theme based on the selected mode
   const theme = useMemo(
     () =>
       createTheme({

@@ -6,6 +6,11 @@ import type { ReduxState, DisplayableArticle } from './feedsPageTypes';
 
 export const DATE_FORMAT = 'YYYY/MM/DD HH:mm:ss';
 
+/**
+ * each resource has different data structure
+ */
+
+// this function will extract only compatible data from NewsApi data structure
 const extractCompatibleDataFromNewsApiData = (data?: NewsApiArticleInterface | null): DisplayableArticle[] => {
   if (!data || !Array.isArray(data.articles)) return [];
 
@@ -20,6 +25,8 @@ const extractCompatibleDataFromNewsApiData = (data?: NewsApiArticleInterface | n
     sourceName: article.source.name,
   }));
 };
+
+// this function will extract only compatible data from TheGuardian data structure
 const extractCompatibleDataFromTheGuardianData = (data?: TheGuardianArticleInterface | null): DisplayableArticle[] => {
   if (!data || !Array.isArray(data.results)) return [];
 
@@ -34,6 +41,8 @@ const extractCompatibleDataFromTheGuardianData = (data?: TheGuardianArticleInter
     sourceName: article.sectionName,
   }));
 };
+
+// this function will extract only compatible data from NewYorkTimes data structure
 const extractCompatibleDataFromNewYorkTimesData = (data?: NYTimesArticleInterface | null): DisplayableArticle[] => {
   if (!data || !Array.isArray(data.docs)) return [];
 
@@ -49,6 +58,8 @@ const extractCompatibleDataFromNewYorkTimesData = (data?: NYTimesArticleInterfac
   }));
 };
 
+// this function will merge compatible data from all resources to one array
+// to ensure that all have the same data structure and show them in the same way
 export const mergeArticles = (data: {
   newsApiData: ReduxState[NewsResources.NewsApi];
   theGuardianData: ReduxState[NewsResources.TheGuardian];
@@ -65,6 +76,7 @@ export const mergeArticles = (data: {
   return mergedData;
 };
 
+// use debounce to prevent calling functions too many times
 export const debounce = <T extends (...args: any[]) => void>(callback: T, delay: number): any => {
   let timeoutId: number;
 
@@ -74,4 +86,20 @@ export const debounce = <T extends (...args: any[]) => void>(callback: T, delay:
       callback(...args);
     }, delay);
   };
+};
+
+// get array of objects and sort them by value base of specific key
+export const sortArrayByValue = <T>(array: T[], key: keyof T, value: string): T[] => {
+  return array.sort((a, b) => {
+    const valueA = (a[key] as unknown as string).toString().toUpperCase();
+    const valueB = (b[key] as unknown as string).toString().toUpperCase();
+
+    if (valueA === value.toUpperCase() && valueB !== value.toUpperCase()) {
+      return -1; // Move matching value to the top
+    } else if (valueA !== value.toUpperCase() && valueB === value.toUpperCase()) {
+      return 1; // Move matching value to the top
+    } else {
+      return 0; // Maintain original order for other cases
+    }
+  });
 };
