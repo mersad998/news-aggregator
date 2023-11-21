@@ -22,4 +22,14 @@ export const useStyles = makeStyles<Theme>((theme) => ({
       display: 'flex',
     },
   },
+  iconButtons: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  iconButton: {
+    marginLeft: 1,
+    '&:focus': {
+      outline: 'none',
+    },
+  },
 }));

@@ -1,4 +1,4 @@
-import { useContext, type FC } from 'react';
+import { useContext, type FC, useState } from 'react';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -17,6 +17,12 @@ const HeaderView: FC<HeaderViewProps> = (props) => {
   const colorMode = useContext(ColorModeContext);
   const classes = useStyles();
 
+  const [language, setLanguage] = useState<'en' | 'de'>('en');
+
+  const toggleLanguage = (): void => {
+    setLanguage((prevLanguage) => (prevLanguage === 'en' ? 'de' : 'en'));
+  };
+
   return (
     <div className={classes.container}>
       <div className={classes.menuContainer}>
@@ -27,9 +33,15 @@ const HeaderView: FC<HeaderViewProps> = (props) => {
         {title}
       </Typography>
 
-      <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color="inherit">
-        {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
-      </IconButton>
+      <div className={classes.iconButtons}>
+        <IconButton className={classes.iconButton} onClick={colorMode.toggleColorMode} color="inherit">
+          {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+        </IconButton>
+
+        <IconButton className={classes.iconButton} onClick={toggleLanguage} color="inherit">
+          {language === 'en' ? 'en' : 'de'}
+        </IconButton>
+      </div>
     </div>
   );
 };
