@@ -39,11 +39,7 @@ const SearchBarView: FC<SearchBarViewProps> = (props) => {
           )}
         >
           {resourceSelectItems.map((resource) => (
-            <MenuItem
-              key={resource.value}
-              value={resource.value}
-              style={{ fontWeight: theme.typography.fontWeightRegular }}
-            >
+            <MenuItem key={resource.value} value={resource.value} style={{ fontWeight: theme.typography.fontWeightRegular }}>
               {resource.label}
             </MenuItem>
           ))}

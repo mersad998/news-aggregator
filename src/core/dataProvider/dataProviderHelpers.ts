@@ -1,6 +1,13 @@
 import querystring from 'qs';
 
-import { NEWS_API_API_KEY, NEWS_API_BASE_URL, THE_GUARDIAN_BASE_URL, THE_GUARDIAN_API_KEY, NY_TIMES_BASE_URL, NY_TIMES_API_KEY } from '../constants';
+import {
+  NEWS_API_API_KEY,
+  NEWS_API_BASE_URL,
+  THE_GUARDIAN_BASE_URL,
+  THE_GUARDIAN_API_KEY,
+  NY_TIMES_BASE_URL,
+  NY_TIMES_API_KEY,
+} from '../constants';
 
 import { type ApiKeyInformation, type GetBaseUrlByResourceName, type FetchDataOptions, NewsResources } from './dataProviderTypes';
 
