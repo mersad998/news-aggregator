@@ -78,7 +78,7 @@ export const mergeArticles = (data: {
 
 // use debounce to prevent calling functions too many times
 export const debounce = <T extends (...args: any[]) => void>(callback: T, delay: number): any => {
-  let timeoutId: number;
+  let timeoutId: any;
 
   return (...args: Parameters<T>): void => {
     clearTimeout(timeoutId);
