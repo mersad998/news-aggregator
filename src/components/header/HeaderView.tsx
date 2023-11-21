@@ -5,23 +5,19 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { useTheme } from '@mui/material/styles';
 import { IconButton, Typography } from '@mui/material';
 
-import ColorModeContext from '../../core/contexs/colorMode';
+import SettingsContext from '../../core/contexts/settingsContext';
 import { useStyles } from './HeaderStyles';
 
 import type { HeaderViewProps } from './HeaderTypes';
+import { useTranslation } from 'react-i18next';
 
 const HeaderView: FC<HeaderViewProps> = (props) => {
   const { title, onHamburgerButtonClick } = props;
+  const { colorMode, language } = useContext(SettingsContext);
 
   const theme = useTheme();
-  const colorMode = useContext(ColorModeContext);
   const classes = useStyles();
-
-  const [language, setLanguage] = useState<'en' | 'de'>('en');
-
-  const toggleLanguage = (): void => {
-    setLanguage((prevLanguage) => (prevLanguage === 'en' ? 'de' : 'en'));
-  };
+  const { t } = useTranslation();
 
   return (
     <div className={classes.container}>
@@ -38,8 +34,8 @@ const HeaderView: FC<HeaderViewProps> = (props) => {
           {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
         </IconButton>
 
-        <IconButton className={classes.iconButton} onClick={toggleLanguage} color="inherit">
-          {language === 'en' ? 'en' : 'de'}
+        <IconButton className={classes.iconButton} onClick={language.toggleLanguage} color="inherit">
+          {t('language')}
         </IconButton>
       </div>
     </div>
