@@ -13,7 +13,6 @@ const DrawerController: FC<DrawerControllerProps> = forwardRef((props, forwarder
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const { t } = useTranslation();
-  console.log('t: ', t);
 
   // this hook will fill forwarded ref with custom local functions
   useImperativeHandle(forwarderRef, () => ({
@@ -30,16 +29,6 @@ const DrawerController: FC<DrawerControllerProps> = forwardRef((props, forwarder
   };
 
   const menuItems: Array<MenuItemInterface> = [
-    {
-      title: t('menu.home'),
-      icon: <HomeIcon />,
-      link: '/',
-    },
-    {
-      title: t('menu.home'),
-      icon: <HomeIcon />,
-      link: '/',
-    },
     {
       title: t('menu.home'),
       icon: <HomeIcon />,

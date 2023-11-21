@@ -7,7 +7,7 @@ const useColorMode = (): {
   };
   theme: Theme;
 } => {
-  const [mode, setMode] = useState<'light' | 'dark'>('light');
+  const [mode, setMode] = useState<'light' | 'dark'>('dark');
 
   const colorMode = useMemo(
     () => ({
@@ -23,6 +23,10 @@ const useColorMode = (): {
       createTheme({
         palette: {
           mode,
+          background: {
+            default: mode === 'dark' ? '#242424' : '#f0f2f5',
+            paper: mode === 'dark' ? '#242424' : '#ffffff',
+          },
         },
       }),
     [mode],

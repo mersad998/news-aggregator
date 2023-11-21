@@ -2,11 +2,13 @@ import makeStyles from '@mui/styles/makeStyles';
 
 import type { Theme } from '@mui/material';
 
-export const useStyles = makeStyles<Theme>(() => ({
+export const useStyles = makeStyles<Theme>((theme) => ({
   container: {
     display: 'flex',
-    flex: 1,
     flexDirection: 'column',
+    height: '100vh',
+    backgroundColor: theme.palette.background.default,
+    color: theme.palette.text.primary,
   },
 
   headerAndContentContainer: {
@@ -20,7 +22,7 @@ export const useStyles = makeStyles<Theme>(() => ({
     display: 'flex',
     flex: 1,
     flexDirection: 'column',
-    overflow: 'hidden',
+    overflow: 'auto',
     padding: 8,
   },
 }));
