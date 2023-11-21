@@ -4,10 +4,14 @@ import { useTranslation } from 'react-i18next';
 import type { FeedCardViewProps } from './feedCard.type';
 import { Button, Typography } from '@mui/material';
 import { useStyles } from './feedCard.style';
+import { NewsResources } from '../../core/dataProvider/dataProviderTypes';
 
 const FeedCardView: FC<FeedCardViewProps> = (props) => {
   const { article } = props;
   const { author, date, description, images, resource, sourceName, title, url } = article;
+
+  const resourceLogo =
+    resource === NewsResources.NewsApi ? '/na.png' : resource === NewsResources.TheGuardian ? '/tg.png' : '/nt.png';
 
   const classes = useStyles();
   const { t } = useTranslation();
@@ -19,7 +23,7 @@ const FeedCardView: FC<FeedCardViewProps> = (props) => {
         <div className={classes.summery}>
           <div className={classes.publisherInfo}>
             <Typography color="ButtonFace" className={classes.publisherInfoText}>
-              {resource} / {sourceName} / {author}
+              {sourceName} / {author}
             </Typography>
           </div>
 
@@ -30,6 +34,7 @@ const FeedCardView: FC<FeedCardViewProps> = (props) => {
         <div className={classes.content}>
           <Typography>{description}</Typography>
           <Typography color="ButtonFace">{date}</Typography>
+          <img src={resourceLogo} alt={title} className={classes.logo} />
           <div className={classes.emptyArea}></div>
           <Button
             onClick={() => {
@@ -48,8 +53,9 @@ const FeedCardView: FC<FeedCardViewProps> = (props) => {
     <div className={classes.divWithPadding}>
       <div className={classes.container}>
         <div className={classes.summery}>
+          <img src={resourceLogo} alt={title} className={classes.logo} />
           <Typography color="ButtonFace" className={classes.publisherInfoText}>
-            {resource} / {sourceName} / {author}
+            {sourceName} / {author}
           </Typography>
 
           <Typography>{title}</Typography>

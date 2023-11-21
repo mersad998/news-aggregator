@@ -19,6 +19,7 @@ const initialState: ResourcesState = {
     parameters: {
       page: 1,
       pageSize: 10,
+      q: 'software',
     },
   },
   [NewsResources.TheGuardian]: {
