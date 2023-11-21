@@ -10,11 +10,12 @@ import PersonIcon from '@mui/icons-material/Person';
 import SettingsIcon from '@mui/icons-material/Settings';
 import PublicIcon from '@mui/icons-material/Public';
 import CategoryIcon from '@mui/icons-material/Category';
+import { useTranslation } from 'react-i18next';
 import { Button, FormControl, InputLabel, Popover, TextField } from '@mui/material';
 import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
 
 import { useStyles } from './searchBarStyle';
-import { MenuProps, resourceSelectItems } from './searchBarHelper';
+import { resourceSelectItems, MenuProps } from './searchBarHelper';
 
 import type { SearchBarViewProps } from './searchBarTypes';
 
@@ -23,16 +24,17 @@ const SearchBarView: FC<SearchBarViewProps> = (props) => {
 
   const theme = useTheme();
   const classes = useStyles();
+  const { t } = useTranslation();
 
   return (
     <div className={classes.container}>
       <FormControl sx={{ m: 1 }}>
-        <InputLabel id="resource-select-label">select resources</InputLabel>
+        <InputLabel id="resource-select-label">{t('searchBar.selectResources')}</InputLabel>
         <Select
           style={{ marginInline: 4, flex: 1 }}
           value={selectedResources}
           onChange={onResourceSelect}
-          input={<OutlinedInput id="select-multiple-chip" label="select resources" />}
+          input={<OutlinedInput id="select-multiple-chip" label={t('searchBar.selectResources')} />}
           labelId="resource-select-label"
           MenuProps={MenuProps}
           multiple
@@ -55,15 +57,16 @@ const SearchBarView: FC<SearchBarViewProps> = (props) => {
       <div>
         <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
           <SearchIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-          <TextField onChange={onSearch} id="bulk" label="search anything" variant="standard" />
+          <TextField onChange={onSearch} id="bulk" label={t('searchBar.searchAnyThing')} variant="standard" />
         </Box>
 
         <PopupState variant="popover" popupId="demo-popup-popover">
           {(popupState) => (
             <div>
               <Button {...bindTrigger(popupState)} variant="outlined" sx={{ marginTop: 2 }} startIcon={<SettingsIcon />}>
-                Customize your feeds
+                {t('searchBar.customizeYourFeeds')}
               </Button>
+
               <Popover
                 {...bindPopover(popupState)}
                 anchorOrigin={{
@@ -77,15 +80,15 @@ const SearchBarView: FC<SearchBarViewProps> = (props) => {
               >
                 <Box sx={{ display: 'flex', alignItems: 'flex-end', padding: 2 }}>
                   <PersonIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                  <TextField onChange={onSearch} id="author" label="author" variant="standard" />
+                  <TextField onChange={onSearch} id="author" label={t('searchBar.author')} variant="standard" />
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'flex-end', padding: 2 }}>
                   <CategoryIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                  <TextField onChange={onSearch} id="category" label="category" variant="standard" />
+                  <TextField onChange={onSearch} id="category" label={t('searchBar.category')} variant="standard" />
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'flex-end', padding: 2 }}>
                   <PublicIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                  <TextField onChange={onSearch} id="sources" label="sources" variant="standard" />
+                  <TextField onChange={onSearch} id="sources" label={t('searchBar.sources')} variant="standard" />
                 </Box>
               </Popover>
             </div>

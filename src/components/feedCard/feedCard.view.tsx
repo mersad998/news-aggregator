@@ -1,4 +1,5 @@
 import { type FC } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { FeedCardViewProps } from './feedCard.type';
 import { Button, Typography } from '@mui/material';
@@ -9,7 +10,9 @@ const FeedCardView: FC<FeedCardViewProps> = (props) => {
   const { author, date, description, images, resource, sourceName, title, url } = article;
 
   const classes = useStyles();
+  const { t } = useTranslation();
 
+  // if there is an image, show it
   if (images[0]) {
     return (
       <div className={classes.container}>
@@ -33,13 +36,14 @@ const FeedCardView: FC<FeedCardViewProps> = (props) => {
               window.open(url, '_blank');
             }}
           >
-            continue to full page
+            {t('feeds.continueToFullPage')}
           </Button>
         </div>
       </div>
     );
   }
 
+  // if there is no image, show a text only card
   return (
     <div className={classes.divWithPadding}>
       <div className={classes.container}>
@@ -59,7 +63,7 @@ const FeedCardView: FC<FeedCardViewProps> = (props) => {
               window.open(url, '_blank');
             }}
           >
-            continue to full page
+            {t('feeds.continueToFullPage')}
           </Button>
         </div>
       </div>
