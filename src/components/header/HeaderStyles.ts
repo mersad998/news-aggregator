@@ -10,15 +10,16 @@ export const useStyles = makeStyles<Theme>((theme) => ({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: '0px 10px',
-    borderBottom: `1px solid ${
-      theme.palette.mode === 'dark' ? theme.palette.primary.light : theme.palette.primary.dark
-    }`,
+    padding: `0 ${theme.spacing(2)}`,
+    borderBottom: `1px solid ${theme.palette.mode === 'dark' ? theme.palette.primary.light : theme.palette.primary.dark}`,
   },
   menuContainer: {
-    display: 'flex',
+    display: 'none',
     flexDirection: 'row',
     alignItems: 'center',
-    color: `${theme.palette.primary.light}`,
+    color: theme.palette.primary.light,
+    '@media (min-width: 800px)': {
+      display: 'flex',
+    },
   },
 }));
