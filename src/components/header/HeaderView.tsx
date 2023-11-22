@@ -1,4 +1,4 @@
-import { useContext, type FC, useState } from 'react';
+import { useContext, type FC } from 'react';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import MenuIcon from '@mui/icons-material/Menu';
