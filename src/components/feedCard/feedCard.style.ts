@@ -43,6 +43,7 @@ export const useStyles = makeStyles<Theme>(() => ({
     objectFit: 'contain',
     width: 50,
     height: 50,
+    borderRadius: '50%',
   },
   summery: {
     display: 'flex',

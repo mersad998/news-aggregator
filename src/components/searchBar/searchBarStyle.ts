@@ -22,4 +22,43 @@ export const useStyles = makeStyles<Theme>((theme) => ({
       alignItems: 'center',
     },
   },
+  selectResourceContainer: {
+    m: 1,
+    minWidth: 200,
+    width: '100%',
+    '@media (min-width: 800px)': {
+      width: 'unset',
+    },
+  },
+  searchAreaContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    width: '100% ',
+    justifyContent: 'end',
+    '@media (min-width: 800px)': {
+      flexDirection: 'column',
+      alignItems: 'center',
+      width: 'unset',
+    },
+  },
+  bulkTextFieldContainer: {
+    display: 'flex',
+    alignItems: 'flex-end',
+    width: '100%',
+    '@media (min-width: 800px)': {
+      width: 'unset',
+    },
+  },
+  bulkTextField: {
+    width: '100%',
+    '@media (min-width: 800px)': {
+      width: 'unset',
+    },
+  },
+  customizeButtonText: {
+    display: 'none',
+    '@media (min-width: 800px)': {
+      display: 'block',
+    },
+  },
 }));

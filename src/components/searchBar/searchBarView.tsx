@@ -11,7 +11,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import PublicIcon from '@mui/icons-material/Public';
 import CategoryIcon from '@mui/icons-material/Category';
 import { useTranslation } from 'react-i18next';
-import { Button, FormControl, InputLabel, Popover, TextField } from '@mui/material';
+import { Button, FormControl, InputLabel, Popover, TextField, Typography } from '@mui/material';
 import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
 
 import { useStyles } from './searchBarStyle';
@@ -28,7 +28,7 @@ const SearchBarView: FC<SearchBarViewProps> = (props) => {
 
   return (
     <div className={classes.container}>
-      <FormControl sx={{ m: 1 }}>
+      <FormControl className={classes.selectResourceContainer}>
         <InputLabel id="resource-select-label">{t('searchBar.selectResources')}</InputLabel>
         <Select
           style={{ marginInline: 4, flex: 1 }}
@@ -54,17 +54,30 @@ const SearchBarView: FC<SearchBarViewProps> = (props) => {
         </Select>
       </FormControl>
 
-      <div>
-        <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+      <div className={classes.searchAreaContainer}>
+        <Box className={classes.bulkTextFieldContainer}>
           <SearchIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-          <TextField onChange={onSearch} id="bulk" label={t('searchBar.searchAnyThing')} variant="standard" />
+          <TextField
+            onChange={onSearch}
+            id="bulk"
+            label={t('searchBar.searchAnyThing')}
+            variant="standard"
+            className={classes.bulkTextField}
+          />
         </Box>
 
         <PopupState variant="popover" popupId="demo-popup-popover">
           {(popupState) => (
             <div>
-              <Button {...bindTrigger(popupState)} variant="outlined" sx={{ marginTop: 2 }} startIcon={<SettingsIcon />}>
-                {t('searchBar.customizeYourFeeds')}
+              <Button
+                {...bindTrigger(popupState)}
+                variant="outlined"
+                sx={{ marginTop: 2, border: 'unset' }}
+                startIcon={<SettingsIcon />}
+              >
+                <Typography fontSize="small" className={classes.customizeButtonText}>
+                  {t('searchBar.customizeYourFeeds')}
+                </Typography>
               </Button>
 
               <Popover
