@@ -54,5 +54,3 @@ Pull the News Aggregator Docker image from Docker Hub:
 docker pull mersadmgl/news-aggregator:1
 docker run -p 4173:4173 mersadmgl/news-aggregator:1
 ```
-### Access the App On
-http://localhost:4173
