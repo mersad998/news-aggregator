@@ -1,7 +1,9 @@
 import moment from 'moment';
 
-import type { NYTimesArticleInterface, NewsApiArticleInterface, TheGuardianArticleInterface } from './newsTypes';
 import { NewsResources } from '../../core/dataProvider/dataProviderTypes';
+import { UserCustomSort } from './hooks/usePrepareData';
+
+import type { NYTimesArticleInterface, NewsApiArticleInterface, TheGuardianArticleInterface } from './newsTypes';
 import type { ReduxState, DisplayableArticle } from './feedsPageTypes';
 
 export const DATE_FORMAT = 'YYYY/MM/DD HH:mm:ss';
@@ -91,8 +93,8 @@ export const debounce = <T extends (...args: any[]) => void>(callback: T, delay:
 // get array of objects and sort them by value base of specific key
 export const sortArrayByValue = <T>(array: T[], key: keyof T, value: string): T[] => {
   return array.sort((a, b) => {
-    const valueA = (a[key] as unknown as string).toString().toUpperCase();
-    const valueB = (b[key] as unknown as string).toString().toUpperCase();
+    const valueA = (a[key] as unknown as string)?.toString().toUpperCase();
+    const valueB = (b[key] as unknown as string)?.toString().toUpperCase();
 
     if (valueA === value.toUpperCase() && valueB !== value.toUpperCase()) {
       return -1; // Move matching value to the top
@@ -102,4 +104,32 @@ export const sortArrayByValue = <T>(array: T[], key: keyof T, value: string): T[
       return 0; // Maintain original order for other cases
     }
   });
+};
+
+// sort articles by date and by user customizations
+export const sortFeeds = (mergedData: DisplayableArticle[], userCustomSorts: UserCustomSort): void => {
+  // all articles should be sorted by date
+  mergedData.sort((a, b) => {
+    const dateA = moment(a.date, DATE_FORMAT);
+    const dateB = moment(b.date, DATE_FORMAT);
+
+    return dateA.isBefore(dateB) ? 1 : -1;
+  });
+
+  // when user has custom customization, data should sort for it to have better experience
+  for (const [key, value] of Object.entries(userCustomSorts)) {
+    if (value) {
+      switch (key) {
+        case 'author':
+          sortArrayByValue(mergedData, 'author', value);
+          break;
+        case 'category':
+          sortArrayByValue(mergedData, 'title', value);
+          break;
+        case 'sources':
+          sortArrayByValue(mergedData, 'sourceName', value);
+          break;
+      }
+    }
+  }
 };

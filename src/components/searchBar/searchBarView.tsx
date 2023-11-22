@@ -1,4 +1,4 @@
-import { type FC } from 'react';
+import { cloneElement, ReactElement, type FC } from 'react';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -20,15 +20,36 @@ import { resourceSelectItems, MenuProps } from './searchBarHelper';
 import type { SearchBarViewProps } from './searchBarTypes';
 
 const SearchBarView: FC<SearchBarViewProps> = (props) => {
-  const { selectedResources, onSearch, onResourceSelect } = props;
+  const { selectedResources, userCustomSorts, onSearch, onResourceSelect } = props;
 
   const theme = useTheme();
   const classes = useStyles();
   const { t } = useTranslation();
 
+  const searchOptions = [
+    {
+      id: 'author',
+      label: t('searchBar.author'),
+      defaultValue: userCustomSorts.author,
+      iconComponent: <PersonIcon />,
+    },
+    {
+      id: 'category',
+      label: t('searchBar.category'),
+      defaultValue: userCustomSorts.category,
+      iconComponent: <PublicIcon />,
+    },
+    {
+      id: 'sources',
+      label: t('searchBar.sources'),
+      defaultValue: userCustomSorts.sources,
+      iconComponent: <CategoryIcon />,
+    },
+  ];
+
   return (
     <div className={classes.container}>
-      <FormControl className={classes.selectResourceContainer}>
+      <FormControl className={classes.selectResourceContainer} sx={{ minWidth: 200 }}>
         <InputLabel id="resource-select-label">{t('searchBar.selectResources')}</InputLabel>
         <Select
           style={{ marginInline: 4, flex: 1 }}
@@ -91,18 +112,22 @@ const SearchBarView: FC<SearchBarViewProps> = (props) => {
                   horizontal: 'center',
                 }}
               >
-                <Box sx={{ display: 'flex', alignItems: 'flex-end', padding: 2 }}>
-                  <PersonIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                  <TextField onChange={onSearch} id="author" label={t('searchBar.author')} variant="standard" />
-                </Box>
-                <Box sx={{ display: 'flex', alignItems: 'flex-end', padding: 2 }}>
-                  <CategoryIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                  <TextField onChange={onSearch} id="category" label={t('searchBar.category')} variant="standard" />
-                </Box>
-                <Box sx={{ display: 'flex', alignItems: 'flex-end', padding: 2 }}>
-                  <PublicIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                  <TextField onChange={onSearch} id="sources" label={t('searchBar.sources')} variant="standard" />
-                </Box>
+                {searchOptions.map((option) => {
+                  return (
+                    <Box sx={{ display: 'flex', alignItems: 'flex-end', padding: 2 }}>
+                      {!!option.iconComponent &&
+                        cloneElement(option.iconComponent, { sx: { color: 'action.active', mr: 1, my: 0.5 } })}
+
+                      <TextField
+                        onChange={onSearch}
+                        id={option.id}
+                        label={option.label}
+                        defaultValue={option.defaultValue}
+                        variant="standard"
+                      />
+                    </Box>
+                  );
+                })}
               </Popover>
             </div>
           )}

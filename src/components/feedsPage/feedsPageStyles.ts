@@ -12,4 +12,11 @@ export const useStyles = makeStyles<Theme>((theme) => ({
       paddingInline: theme.spacing(16),
     },
   },
+  noData: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+  },
 }));

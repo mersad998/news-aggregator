@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { ResourcesState } from './types';
 import { NewsResources } from '../dataProvider/dataProviderTypes';
+// import NYTMockData from '../NYTMockData.json'; you can uncomment this line to use mock data
 
 import type { SetDataPayload, SetErrorPayload, SetBulkParametersPayload, SetParameterPayload } from './types';
 import type {
@@ -67,11 +68,11 @@ const resourcesSlice = createSlice({
       state[resourceName].isLoading = false;
 
       /*
-       * you can uncomment this line to use mock data 👇
-       */
+       * you can uncomment these lines to use mock data 👇
 
-      // state[resourceName].data = NYTMockData.response as any;
-      // state[resourceName].isLoading = false;
+       * state[resourceName].data = NYTMockData.response as any;
+       * state[resourceName].isLoading = false;
+       */
     },
 
     setParameter: (state, action: PayloadAction<SetParameterPayload>) => {

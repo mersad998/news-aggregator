@@ -13,5 +13,6 @@ export const DeTranslations = {
   },
   feeds: {
     continueToFullPage: 'Weiter zur ganzen Seite',
+    noData: 'Keine Daten mit diesen Parametern gefunden',
   },
 } as const;

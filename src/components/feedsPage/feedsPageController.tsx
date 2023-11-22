@@ -9,7 +9,7 @@ import { NewsResources } from '../../core/dataProvider/dataProviderTypes';
 
 const FeedsPageController: FC = () => {
   const { setBulkQueryParameters, setQueryParameterToResource } = useFetchData();
-  const { data, isLoading, totalCount, onResourceSelect } = usePrepareData();
+  const { data, isLoading, totalCount, userCustomSorts, onResourceSelect } = usePrepareData();
 
   if (isLoading) {
     return <LoadingBox />;
@@ -22,12 +22,25 @@ const FeedsPageController: FC = () => {
     const value = event.target.value as string;
     const id = event.target.id as string;
 
-    if (id === 'bulk') {
-      setBulkQueryParameters({ query: value });
-    } else if (id === 'category') {
-      setQueryParameterToResource({ country: value }, NewsResources.NewsApi);
-    } else if (id === 'author' || id === 'sources') {
-      setQueryParameterToResource({ tag: value }, NewsResources.TheGuardian);
+    switch (id) {
+      case 'bulk':
+        setBulkQueryParameters({ query: value });
+        break;
+
+      // here we can add supportable parameters to different resources
+      case 'category':
+        setQueryParameterToResource({ category: value }, NewsResources.NewsApi);
+        break;
+      case 'author':
+        setQueryParameterToResource({ author: value }, NewsResources.NewsApi);
+        break;
+      case 'sources':
+        setQueryParameterToResource({ tag: value }, NewsResources.TheGuardian);
+        break;
+
+      default:
+        console.warn('invalid search type!');
+        break;
     }
   }, 500);
 
@@ -45,6 +58,7 @@ const FeedsPageController: FC = () => {
       totalCount={totalCount}
       onPageChange={onPageChange}
       onPageSizeChange={onPageSizeChange}
+      userCustomSorts={userCustomSorts}
       onResourceSelect={onResourceSelect}
     />
   );

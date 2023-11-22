@@ -7,7 +7,7 @@ import type { SearchBarControllerProps } from './searchBarTypes';
 import { allSelectableResources } from './searchBarHelper';
 
 const SearchBarController: FC<SearchBarControllerProps> = (props) => {
-  const { onSearch, onResourceSelect } = props;
+  const { onSearch, onResourceSelect, userCustomSorts } = props;
 
   const [selectedResources, setSelectedResources] = useState<string[]>(allSelectableResources);
 
@@ -20,7 +20,14 @@ const SearchBarController: FC<SearchBarControllerProps> = (props) => {
     onResourceSelect(valueAsArray);
   };
 
-  return <SearchBarView onSearch={onSearch} onResourceSelect={_onResourceSelect} selectedResources={selectedResources} />;
+  return (
+    <SearchBarView
+      onSearch={onSearch}
+      onResourceSelect={_onResourceSelect}
+      selectedResources={selectedResources}
+      userCustomSorts={userCustomSorts}
+    />
+  );
 };
 
 export default SearchBarController;

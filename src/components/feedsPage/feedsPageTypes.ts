@@ -1,11 +1,12 @@
 import type { ChangeEvent } from 'react';
+import type { NYTimesArticleInterface, NewsApiArticleInterface, TheGuardianArticleInterface } from './newsTypes';
+import type { UserCustomSort } from './hooks/usePrepareData';
 import {
   type NewsApiParameters,
   type TheGuardianParameters,
   type NewYorkTimesParameters,
   NewsResources,
 } from '../../core/dataProvider/dataProviderTypes';
-import type { NYTimesArticleInterface, NewsApiArticleInterface, TheGuardianArticleInterface } from './newsTypes';
 
 export interface ReduxState {
   [NewsResources.NewsApi]?: {
@@ -33,6 +34,7 @@ export interface ReduxState {
 export interface FeedsPageViewProps {
   articles: DisplayableArticle[];
   totalCount: number;
+  userCustomSorts: UserCustomSort;
 
   onSearch: (event: ChangeEvent<HTMLInputElement>) => void;
   onResourceSelect: (selectedResources: string[]) => void;

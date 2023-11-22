@@ -1,5 +1,8 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Theme, createTheme } from '@mui/material';
+import { readFromLocalStorage, writeToLocalStorage } from '../helpers';
+
+const App_Settings = 'App_Settings';
 
 interface UseSettings {
   colorMode: {
@@ -12,10 +15,22 @@ interface UseSettings {
   selectedLanguage: 'en' | 'de';
 }
 
+type Language = 'en' | 'de';
+type ThemeMode = 'light' | 'dark';
+
 // this hook will provide the accessability to setting context where ever needed
 const useSettings = (): UseSettings => {
-  const [mode, setMode] = useState<'light' | 'dark'>('dark'); // default mode is dark
-  const [language, setLanguage] = useState<'en' | 'de'>('en'); // default language is english
+  const defaultSettings = readFromLocalStorage<{
+    mode: ThemeMode;
+    language: Language;
+  }>(App_Settings);
+
+  const [mode, setMode] = useState<ThemeMode>(defaultSettings?.mode || 'dark');
+  const [language, setLanguage] = useState<Language>(defaultSettings?.language || 'en');
+
+  useEffect(() => {
+    writeToLocalStorage(App_Settings, { mode, language });
+  }, [mode, language]);
 
   // this function will toggle the color mode
   const colorMode = useMemo(

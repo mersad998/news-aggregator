@@ -1,16 +1,23 @@
 import { useSelector } from 'react-redux';
 import { DisplayableArticle, ReduxState } from '../feedsPageTypes';
 import { NewsResources } from '../../../core/dataProvider/dataProviderTypes';
-import { DATE_FORMAT, debounce, mergeArticles, sortArrayByValue } from '../feedsPageHelper';
-import moment from 'moment';
+import { debounce, mergeArticles, sortFeeds } from '../feedsPageHelper';
+
 import { useState } from 'react';
 import { allSelectableResources } from '../../searchBar/searchBarHelper';
+
+export interface UserCustomSort {
+  author: string;
+  category: string;
+  sources: string;
+}
 
 interface UsePrepareData {
   data: DisplayableArticle[];
   isLoading: boolean;
   onResourceSelect: (selectedResources: string[]) => void;
   totalCount: number;
+  userCustomSorts: UserCustomSort;
 }
 
 const usePrepareData = (): UsePrepareData => {
@@ -27,12 +34,15 @@ const usePrepareData = (): UsePrepareData => {
     (state) => state.resources[NewsResources.NewYorkTimes],
   ) as ReduxState[NewsResources.NewYorkTimes];
 
+  // extract user custom sorts from redux
+  const userCustomSorts: UserCustomSort = {
+    author: newsApiData?.parameters.author ?? '',
+    category: newsApiData?.parameters.category ?? '',
+    sources: theGuardianData?.parameters.tag ?? '',
+  };
+
   // app should be loading only when all of resources are in loading state and there is no data in redux store
   const isLoading = !!newsApiData?.isLoading && !!theGuardianData?.isLoading && !!newYorkTimesData?.isLoading;
-
-  const onResourceSelect = debounce((selectedResources: string[]): void => {
-    setSelectedResources((allSelectableResources as string[]).filter((resource) => selectedResources.includes(resource)));
-  }, 500);
 
   // merge data from all resources
   const mergedData = mergeArticles({
@@ -41,26 +51,8 @@ const usePrepareData = (): UsePrepareData => {
     newYorkTimesData,
   });
 
-  // all articles should be sorted by date
-  mergedData.sort((a, b) => {
-    const dateA = moment(a.date, DATE_FORMAT);
-    const dateB = moment(b.date, DATE_FORMAT);
-
-    return dateA.isBefore(dateB) ? 1 : -1;
-  });
-
-  // in these three resources only newsApiData has category parameter
-  // so if category is selected as a parameter, sort articles by category
-  if (newsApiData?.parameters.category) {
-    sortArrayByValue(mergedData, 'title', newsApiData.parameters.category);
-  }
-
-  // in these three resources no one accept sourceName and author in free version
-  // so if sourceName or author is selected as a parameter, sort articles by tag
-  if (theGuardianData?.parameters.tag) {
-    sortArrayByValue(mergedData, 'sourceName', theGuardianData.parameters.tag);
-    sortArrayByValue(mergedData, 'author', theGuardianData.parameters.tag);
-  }
+  // sort feeds by reference
+  sortFeeds(mergedData, userCustomSorts);
 
   // filter by resource is client side filtering
   const filteredData = mergedData.filter((article) => selectedResources.includes(article.resource));
@@ -69,11 +61,16 @@ const usePrepareData = (): UsePrepareData => {
   const totalCount =
     (newsApiData?.data?.totalResults ?? 0) + (theGuardianData?.data?.total ?? 0) + (newYorkTimesData?.data?.meta.time ?? 0);
 
+  const onResourceSelect = debounce((selectedResources: string[]): void => {
+    setSelectedResources((allSelectableResources as string[]).filter((resource) => selectedResources.includes(resource)));
+  }, 500);
+
   return {
     data: filteredData,
     isLoading,
     onResourceSelect,
     totalCount,
+    userCustomSorts,
   };
 };
 

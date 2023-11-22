@@ -68,7 +68,7 @@ const useFetchData = (): UseFetchData => {
 
   // call fetch functions when parameters are changed
   useEffect(() => {
-    // fetchNewsApiDada();
+    fetchNewsApiDada();
   }, [
     newsApiCurrentParameters.q,
     newsApiCurrentParameters.page,

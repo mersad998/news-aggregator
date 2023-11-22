@@ -20,6 +20,7 @@ export interface NewsApiParameters {
   q?: string;
   country?: string;
   category?: string;
+  author?: string;
 }
 
 export interface TheGuardianParameters {
